@@ -32,7 +32,7 @@ public:
     {
         root = nullptr;
         freq = 0;
-        word = '\0';
+        word = nullptr;
     }
 };
 
@@ -43,11 +43,13 @@ class minHeap
     minHeapNode *toStore;
     int size; // number of slots filled in minheap
     int minHeapCapacity;
-    minHeap()
+
+    minHeap(int cap)
     {
-        toStore = nullptr;
+        toStore = new minHeapNode[minHeapCapacity];
         size = 0;
-        minHeapCapacity = 1000;
+        minHeapCapacity = cap;
+;
     }
 };
 
