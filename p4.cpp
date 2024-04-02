@@ -83,6 +83,18 @@ void minHeapify(MinHeap *minheap, int index)
     minHeapify(minheap, smallest);
 }
 
+void insertInMinHeap(MinHeap* minheap , TrieNode** root , char* word){
+
+    //word present in the heap so updating the frequency of the occurance of the word
+    if((*root)->MinheapIndex != -1){
+        (minheap->toStore[(*root)->MinheapIndex].freq)++;
+
+    //checking the same for others!
+        minHeapify(minheap , (*root)->MinheapIndex);
+    }
+
+}
+
 int main(void)
 {
 }
