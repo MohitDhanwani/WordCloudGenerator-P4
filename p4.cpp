@@ -106,6 +106,8 @@ void insertInMinHeap(MinHeap *minheap, TrieNode **root, char *word)
         // checking the same for others!
         minHeapify(minheap, (*root)->MinheapIndex);
     }
+
+
     // if word is not present in the minheap
 
     // checking whether the minheap is empty or not
@@ -129,6 +131,43 @@ void insertInMinHeap(MinHeap *minheap, TrieNode **root, char *word)
     }
 
     // case when minheap would be full and word is not present in it.
+}
+
+void insertInBothTrieAndHeap(char* word, TrieNode** root, MinHeap* minHeap){
+
+    //base case
+    if(*root == NULL){
+        *root = new TrieNode();
+    }
+
+    TrieNode* current = *root;
+
+    for (char* ch = word; *ch != '\0'; ch++) {
+
+        int index = tolower(*ch) - 'a';
+
+        if (current->childrenArray[index] == NULL){
+
+        current->childrenArray[index] = new TrieNode();
+        current = current->childrenArray[index];
+
+        }
+           
+    }
+
+    // Word processing is complete, update the Trie node
+    if (current->hasEnded)
+        (current->frequency)++;
+
+    else {
+
+        current->hasEnded = 1;
+        current->frequency = 1;
+        
+    }
+
+    // Insert into Min Heap also
+    insertInMinHeap(minHeap, &current, word);
 }
 
 int main(void)
