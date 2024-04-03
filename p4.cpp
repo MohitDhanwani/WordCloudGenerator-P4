@@ -1,5 +1,6 @@
 #include <iostream>
 using namespace std;
+#include<string.h>
 
 class TrieNode
 {
@@ -83,14 +84,13 @@ void minHeapify(MinHeap *minheap, int index)
     minHeapify(minheap, smallest);
 }
 
+// a function to create minheap
 void buildingMinHeap(MinHeap *minHeap)
 {
-
     int n = minHeap->size - 1;
 
     for (int i = (n - 1) / 2; i >= 0; i--)
     {
-
         minHeapify(minHeap, i);
     }
 }
@@ -106,6 +106,29 @@ void insertInMinHeap(MinHeap *minheap, TrieNode **root, char *word)
         // checking the same for others!
         minHeapify(minheap, (*root)->MinheapIndex);
     }
+    // if word is not present in the minheap
+
+    // checking whether the minheap is empty or not
+    else if (minheap->size < minheap->minHeapCapacity)
+    {
+        int count = minheap->size;
+
+        minheap->toStore[count].freq = (*root)->frequency;
+
+        minheap->toStore[count].word = new char[strlen(word) + 1];
+
+        strcpy(minheap->toStore[count].word, word);
+
+        minheap->toStore[count].root = *root;
+
+        (*root)->MinheapIndex = minheap->size;
+
+        ++(minheap->size);
+
+        buildingMinHeap(minheap);
+    }
+
+    // case when minheap would be full and word is not present in it.
 }
 
 int main(void)
