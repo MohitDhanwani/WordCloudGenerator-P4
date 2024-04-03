@@ -131,6 +131,22 @@ void insertInMinHeap(MinHeap *minheap, TrieNode **root, char *word)
     }
 
     // case when minheap would be full and word is not present in it.
+        
+    else if ((*root)->frequency > minheap->toStore[0].freq)
+    {
+
+        minheap->toStore[0].root->MinheapIndex = -1;
+        minheap->toStore[0].root = *root;
+        minheap->toStore[0].root->MinheapIndex = 0;
+        minheap->toStore[0].freq = (*root)->frequency;
+
+        // delete previously allocated memory and
+        delete[] minheap->toStore[0].word;
+        minheap->toStore[0].word = new char[strlen(word) + 1];
+        strcpy(minheap->toStore[0].word, word);
+
+        minHeapify(minheap, 0);
+    }
 }
 
 void insertInBothTrieAndHeap(char* word, TrieNode** root, MinHeap* minHeap){
