@@ -83,26 +83,29 @@ void minHeapify(MinHeap *minheap, int index)
     minHeapify(minheap, smallest);
 }
 
-void buildingMinHeap(MinHeap* minHeap){
+void buildingMinHeap(MinHeap *minHeap)
+{
 
-    int n=minHeap->size-1;
+    int n = minHeap->size - 1;
 
-    for(int i=(n-1)/2;i>=0;i--){
+    for (int i = (n - 1) / 2; i >= 0; i--)
+    {
 
         minHeapify(minHeap, i);
     }
 }
 
-void insertInMinHeap(MinHeap* minheap , TrieNode** root , char* word){
+void insertInMinHeap(MinHeap *minheap, TrieNode **root, char *word)
+{
 
-    //word present in the heap so updating the frequency of the occurance of the word
-    if((*root)->MinheapIndex != -1){
+    // word present in the heap so updating the frequency of the occurance of the word
+    if ((*root)->MinheapIndex != -1)
+    {
         (minheap->toStore[(*root)->MinheapIndex].freq)++;
 
-    //checking the same for others!
-        minHeapify(minheap , (*root)->MinheapIndex);
+        // checking the same for others!
+        minHeapify(minheap, (*root)->MinheapIndex);
     }
-
 }
 
 int main(void)
