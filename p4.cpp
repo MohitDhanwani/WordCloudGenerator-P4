@@ -43,10 +43,10 @@ public:
     int minHeapCapacity;
 
     MinHeap(int cap)
-    {
+    {   
+        minHeapCapacity = cap;
         toStore = new MinHeapNode[minHeapCapacity];
         size = 0;
-        minHeapCapacity = cap;
     }
 };
 
@@ -163,13 +163,47 @@ void insertInBothTrieAndHeap(char* word, TrieNode** root, MinHeap* minHeap){
 
         current->hasEnded = 1;
         current->frequency = 1;
-        
     }
 
     // Insert into Min Heap also
     insertInMinHeap(minHeap, &current, word);
 }
 
+
+void displayMinHeap(MinHeap* minHeap)
+{
+    for (int i = 0; i < minHeap->size; i++) {
+       cout << minHeap->toStore[i].word << " -> " << minHeap->toStore[i].freq << endl;
+    }
+}
+ 
+void printKMostFreq(FILE* fp, int k)
+{
+    // Create a Min Heap of Size k
+    MinHeap* minHeap = new MinHeap(k);
+ 
+    // Create an empty Trie
+    TrieNode* root = NULL;
+ 
+    // A buffer to store one word at a time
+    char buffer[50];
+ 
+    while (fscanf(fp, "%s", buffer) != EOF)
+        insertInBothTrieAndHeap(buffer, &root, minHeap);
+
+    displayMinHeap(minHeap);
+}
+
 int main(void)
 {
+
+    FILE* fileName = fopen("input.txt", "r");
+
+    if (fileName == NULL) {
+        cout << "File doesn't exist enter valid name" << endl;
+    } 
+    else {
+        printKMostFreq(fileName, 10);
+        fclose(fileName);
+    }
 }
