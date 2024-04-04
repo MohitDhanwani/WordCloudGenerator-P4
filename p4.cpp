@@ -1,7 +1,7 @@
 #include <iostream>
-using namespace std;
-#include<string.h>
+#include <string.h>
 
+using namespace std;
 class TrieNode
 {
 public:
@@ -43,7 +43,7 @@ public:
     int minHeapCapacity;
 
     MinHeap(int cap)
-    {   
+    {
         minHeapCapacity = cap;
         toStore = new MinHeapNode[minHeapCapacity];
         size = 0;
@@ -77,11 +77,10 @@ void minHeapify(MinHeap *minheap, int index)
     {
         minheap->toStore[smallest].root->MinheapIndex = index;
         minheap->toStore[index].root->MinheapIndex = smallest;
+
+        swapMinheapNodes(&minheap->toStore[smallest], &minheap->toStore[index]);
+        minHeapify(minheap, smallest);
     }
-
-    swapMinheapNodes(&minheap->toStore[smallest], &minheap->toStore[index]);
-
-    minHeapify(minheap, smallest);
 }
 
 // a function to create minheap
@@ -107,7 +106,6 @@ void insertInMinHeap(MinHeap *minheap, TrieNode **root, char *word)
         minHeapify(minheap, (*root)->MinheapIndex);
     }
 
-
     // if word is not present in the minheap
 
     // checking whether the minheap is empty or not
@@ -131,7 +129,7 @@ void insertInMinHeap(MinHeap *minheap, TrieNode **root, char *word)
     }
 
     // case when minheap would be full and word is not present in it.
-        
+
     else if ((*root)->frequency > minheap->toStore[0].freq)
     {
 
@@ -149,76 +147,81 @@ void insertInMinHeap(MinHeap *minheap, TrieNode **root, char *word)
     }
 }
 
-void insertInBothTrieAndHeap(char* word, TrieNode** root, MinHeap* minHeap){
-
-    //base case
-    if(*root == NULL){
+void insertUtil(TrieNode **root, MinHeap *minHeap, char *word, char *dupWord)
+{
+    // base condition
+    if (*root == NULL)
+    {
         *root = new TrieNode();
     }
+    // There are still more characters in word
 
-    TrieNode* current = *root;
+    if (*word != '\0')
+    {
+        insertUtil(&((*root)->childrenArray[tolower(*word) - 97]), minHeap, word + 1, dupWord);
+    }
 
-    for (char* ch = word; *ch != '\0'; ch++) {
-
-        int index = tolower(*ch) - 'a';
-
-        if (current->childrenArray[index] == NULL){
-
-        current->childrenArray[index] = new TrieNode();
-        current = current->childrenArray[index];
-
+    // The complete word is processed
+    else
+    {
+        // word is already present, increase the frequency
+        if ((*root)->hasEnded)
+        {
+            ++((*root)->frequency);
         }
-           
+        else
+        {
+            (*root)->hasEnded = 1;
+            (*root)->frequency = 1;
+        }
+        insertInMinHeap(minHeap, root, dupWord);
     }
-
-    // Word processing is complete, update the Trie node
-    if (current->hasEnded)
-        (current->frequency)++;
-
-    else {
-
-        current->hasEnded = 1;
-        current->frequency = 1;
-    }
-
-    // Insert into Min Heap also
-    insertInMinHeap(minHeap, &current, word);
 }
 
+// add a word to Trie & min heap.
 
-void displayMinHeap(MinHeap* minHeap)
+void insertTrieAndHeap(char *word, TrieNode **root, MinHeap *minHeap)
 {
-    for (int i = 0; i < minHeap->size; i++) {
-       cout << minHeap->toStore[i].word << " -> " << minHeap->toStore[i].freq << endl;
+    insertUtil(root, minHeap, word, word);
+}
+
+void displayMinHeap(MinHeap *minHeap)
+{
+    for (int i = 0; i < minHeap->size; i++)
+    {
+        cout << minHeap->toStore[i].word << " -> " << minHeap->toStore[i].freq << endl;
     }
 }
- 
-void printKMostFreq(FILE* fp, int k)
+
+void printKMostFreq(FILE *fp, int k)
 {
     // Create a Min Heap of Size k
-    MinHeap* minHeap = new MinHeap(k);
- 
+    MinHeap *minHeap = new MinHeap(k);
+
     // Create an empty Trie
-    TrieNode* root = NULL;
- 
+    TrieNode *root = NULL;
+
     // A buffer to store one word at a time
     char buffer[50];
- 
-    while (fscanf(fp, "%s", buffer) != EOF)
-        insertInBothTrieAndHeap(buffer, &root, minHeap);
 
+    while (fscanf(fp, "%s", buffer) != EOF)
+    {
+        insertTrieAndHeap(buffer, &root, minHeap);
+    }
     displayMinHeap(minHeap);
 }
 
-int main(void)
+int main()
 {
 
-    FILE* fileName = fopen("input.txt", "r");
+    FILE *fileName = fopen("input.txt", "r");
 
-    if (fileName == NULL) {
+    if (fileName == NULL)
+    {
         cout << "File doesn't exist enter valid name" << endl;
-    } 
-    else {
+    }
+    else
+    {
         printKMostFreq(fileName, 10);
         fclose(fileName);
     }
