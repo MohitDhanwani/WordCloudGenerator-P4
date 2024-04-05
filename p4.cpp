@@ -211,18 +211,32 @@ void printKMostFreq(FILE *fp, int k)
     displayMinHeap(minHeap);
 }
 
-int main()
-{
+int main() {
 
-    FILE *fileName = fopen("input.txt", "r");
+    cout << "Enter the number of words you want to display on the console: " << endl;
+    int k;
+    cin >> k;
 
-    if (fileName == NULL)
-    {
-        cout << "File doesn't exist enter valid name" << endl;
+    cout << "Enter number of files: " << endl;
+    int N;
+    cin >> N;
+
+
+    for (int i = 1; i <= N; i++) {
+        char filename[50]; // Buffer to store filename
+        cout <<"Enter the filename: " << endl;
+        cin >> filename;
+
+        FILE *fp = fopen(filename, "r");
+
+        if (fp == NULL) {
+            cout << "File" << filename << "doesn't exist" << endl;
+            continue;
+        }
+
+        printKMostFreq(fp, k);
+        fclose(fp); 
     }
-    else
-    {
-        printKMostFreq(fileName, 10);
-        fclose(fileName);
-    }
+
+    return 0;
 }
