@@ -1,5 +1,6 @@
 #include <iostream>
 #include <string.h>
+#include<unordered_set>
 
 using namespace std;
 class TrieNode
@@ -147,8 +148,18 @@ void insertInMinHeap(MinHeap *minheap, TrieNode **root, char *word)
     }
 }
 
+//some of the common word which is mostly repeated in any file
+unordered_set<string> stopWords = {"is", "are", "the", "a" ,"an", "but","or","on","at","by","i","you","me"
+"he","she","it","they","we","have","has","do","does","can","could","will","would"};
+
 void insertUtil(TrieNode **root, MinHeap *minHeap, char *word, char *dupWord)
 {
+    // Check if the word is a stop word,if it is then return
+    if (stopWords.find(word) != stopWords.end())
+    {
+        return;
+    }
+     
     // base condition
     if (*root == NULL)
     {
@@ -213,7 +224,7 @@ void printKMostFreq(FILE *fp, int k)
 
 int main() {
 
-    cout << "Enter the number of words you want to display on the console: " << endl;
+    cout << "Enter the number of words(most frequent) you want to display on the console: " << endl;
     int k;
     cin >> k;
 
