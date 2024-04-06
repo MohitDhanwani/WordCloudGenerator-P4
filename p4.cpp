@@ -1,6 +1,7 @@
 #include <iostream>
 #include <string.h>
-#include<unordered_set>
+#include <unordered_set>
+#include <cctype>
 
 using namespace std;
 class TrieNode
@@ -95,9 +96,34 @@ void buildingMinHeap(MinHeap *minHeap)
     }
 }
 
+// to convert the given word into lower case
+void tolowercase(char *word)
+{
+    for (int i = 0; word[i] != '\0'; i++)
+    {
+        word[i] = tolower(word[i]);
+    }
+}
+
+//to remove punctuation marks from the word
+void removePunctuation(char *word)
+{
+    int len = strlen(word);
+    int i = 0, j = 0;
+    while (i < len)
+    {
+        if (!ispunct(word[i]))
+        {
+            word[j++] = word[i];
+        }
+        i++;
+    }
+    word[j] = '\0';
+}
+
 void insertInMinHeap(MinHeap *minheap, TrieNode **root, char *word)
 {
-
+    
     // word present in the heap so updating the frequency of the occurance of the word
     if ((*root)->MinheapIndex != -1)
     {
@@ -148,18 +174,31 @@ void insertInMinHeap(MinHeap *minheap, TrieNode **root, char *word)
     }
 }
 
-//some of the common word which is mostly repeated in any file
-unordered_set<string> stopWords = {"is", "are", "the", "a" ,"an", "but","or","on","at","by","i","you","me"
-"he","she","it","they","we","have","has","do","does","can","could","will","would"};
+// some of the common word which is mostly repeated in any file
+unordered_set<string> stopWords = {"i", "me", "my", "myself", "we", "our", "ours", "ourselves", "you", "your", "yours", 
+    "yourself", "yourselves", "he", "him", "his", "himself", "she", "her", "hers", 
+    "herself", "it", "its", "itself", "they", "them", "their", "theirs", "themselves", 
+    "what", "which", "who", "whom", "this", "that", "these", "those", "am", "is", "are", 
+    "was", "were", "be", "been", "being", "have", "has", "had", "having", "do", "does", 
+    "did", "doing", "a", "an", "the", "and", "but", "if", "or", "because", "as", "until", 
+    "while", "of", "at", "by", "for", "with", "about", "against", "between", "into", 
+    "through", "during", "before", "after", "above", "below", "to", "from", "up", "down", 
+    "in", "out", "on", "off", "over", "under", "again", "further", "then", "once", "here", 
+    "there", "when", "where", "why", "how", "all", "any", "both", "each", "few", "more", 
+    "most", "other", "some", "such", "no", "nor", "not", "only", "own", "same", "so", 
+    "than", "too", "very" , "can", "will", "just", "don", "should", "now" };
 
 void insertUtil(TrieNode **root, MinHeap *minHeap, char *word, char *dupWord)
 {
+    tolowercase(word);
+    removePunctuation(word);
+    
     // Check if the word is a stop word,if it is then return
     if (stopWords.find(word) != stopWords.end())
     {
         return;
     }
-     
+
     // base condition
     if (*root == NULL)
     {
@@ -212,7 +251,7 @@ void displayMinHeapToFile(MinHeap *minHeap, FILE *outFile)
     }
 }
 
-void printKMostFreq(FILE *fp, int k , FILE *outFile)
+void printKMostFreq(FILE *fp, int k, FILE *outFile)
 {
     // Create a Min Heap of Size k
     MinHeap *minHeap = new MinHeap(k);
@@ -229,10 +268,10 @@ void printKMostFreq(FILE *fp, int k , FILE *outFile)
     }
     displayMinHeapToFile(minHeap, outFile);
     displayMinHeap(minHeap);
-
 }
 
-int main() {
+int main()
+{
 
     cout << "Enter the number of words(most frequent) you want to display on the console: " << endl;
     int k;
@@ -242,23 +281,24 @@ int main() {
     int N;
     cin >> N;
 
-
-    for (int i = 1; i <= N; i++) {
+    for (int i = 1; i <= N; i++)
+    {
         char filename[50]; // Buffer to store filename
-        cout <<"Enter the filename: " << endl;
+        cout << "Enter the filename: " << endl;
         cin >> filename;
 
         FILE *fp = fopen(filename, "r");
 
-        if (fp == NULL) {
+        if (fp == NULL)
+        {
             cout << "File" << filename << "doesn't exist" << endl;
             continue;
         }
 
         FILE *outFile = fopen("output.txt", "w");
 
-        printKMostFreq(fp, k , outFile);
-        fclose(fp); 
+        printKMostFreq(fp, k, outFile);
+        fclose(fp);
     }
 
     return 0;
