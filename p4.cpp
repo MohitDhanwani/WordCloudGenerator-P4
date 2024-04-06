@@ -204,7 +204,15 @@ void displayMinHeap(MinHeap *minHeap)
     }
 }
 
-void printKMostFreq(FILE *fp, int k)
+void displayMinHeapToFile(MinHeap *minHeap, FILE *outFile)
+{
+    for (int i = 0; i < minHeap->size; i++)
+    {
+        fprintf(outFile, "%s\n", minHeap->toStore[i].word);
+    }
+}
+
+void printKMostFreq(FILE *fp, int k , FILE *outFile)
 {
     // Create a Min Heap of Size k
     MinHeap *minHeap = new MinHeap(k);
@@ -219,7 +227,9 @@ void printKMostFreq(FILE *fp, int k)
     {
         insertTrieAndHeap(buffer, &root, minHeap);
     }
+    displayMinHeapToFile(minHeap, outFile);
     displayMinHeap(minHeap);
+
 }
 
 int main() {
@@ -245,7 +255,9 @@ int main() {
             continue;
         }
 
-        printKMostFreq(fp, k);
+        FILE *outFile = fopen("output.txt", "w");
+
+        printKMostFreq(fp, k , outFile);
         fclose(fp); 
     }
 
