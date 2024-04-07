@@ -295,10 +295,14 @@ int main()
             continue;
         }
 
+        char outputFilename[50];
+        sprintf(outputFilename, "output_%d.txt", i); 
+
         FILE *outFile = fopen("output.txt", "w");
 
         printKMostFreq(fp, k, outFile);
         fclose(fp);
+        fclose(outFile);
     }
 
     return 0;

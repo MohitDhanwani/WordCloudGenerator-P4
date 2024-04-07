@@ -11,7 +11,7 @@ h1{
     color: black;
 }
 #wordCloudContainer {
-    width: 400px;
+    width: auto;
     height: auto;
     background-color: lightblue;
     padding: 15px;
@@ -24,134 +24,135 @@ h1{
     margin-top: 10px;
     color: #FFFFFF;
 }
-
 .word:nth-child(1) {
-    font-size: 90px; 
+    font-size: 20px;
+    font-weight: 300;
+    color: red;
+    writing-mode: horizontal-tb;
+}
+.word:nth-child(2) {
+    font-size: 30px; 
     font-weight: 900;
     color: #FF6347;
 }
 
-.word:nth-child(2) {
-    font-size: 80px;
+.word:nth-child(3) {
+    font-size: 40px;
     font-weight: 850;
     color: #FF4500;
 }
 
-.word:nth-child(3) {
-    font-size: 70px;
+.word:nth-child(4) {
+    font-size: 50px;
     font-weight: 800;
     color: #FF4500;
     writing-mode: vertical-lr;
 }
 
-.word:nth-child(4) {
-    font-size: 65px;
+.word:nth-child(5) {
+    font-size: 60px;
     font-weight: 750;
     color: aliceblue;
     writing-mode: horizontal-tb;
 }
 
 
-.word:nth-child(5){
-    font-size: 60px;
+.word:nth-child(6){
+    font-size: 70px;
     font-weight: 700;
     color: brown;
 
 }
-.word:nth-child(6) {
-    font-size: 55px;
+.word:nth-child(7) {
+    font-size: 80px;
     font-weight: 675;
     color: #FFD700;
     writing-mode: horizontal-tb;
 }
 
-.word:nth-child(7) {
-    font-size: 50px; 
+.word:nth-child(8) {
+    font-size: 90px; 
     font-weight: 650;
     color: #FF1493; 
     
 }
 
-.word:nth-child(8) {
-    font-size: 45px;
+.word:nth-child(9) {
+    font-size: 100px;
     font-weight: 625;
     color: #20B2AA; 
     writing-mode: vertical-lr;
 }
-.word:nth-child(9) {
-    font-size: 40px;
+.word:nth-child(10) {
+    font-size: 110px;
     font-weight: 600;
     color: #32CD32;
     writing-mode: horizontal-tb;
     margin-bottom: 20px;
 }
 
-.word:nth-child(10){
-   font-size: 35px;
+.word:nth-child(11){
+   font-size: 120px;
    writing-mode: horizontal-tb;
    font-weight: 575;
    color: black;   
 }
-.word:nth-child(11){
-    font-size: 33px;
+.word:nth-child(12){
+    font-size: 130px;
     font-weight: 550;
     color: #9370DB;
 
 }
-.word:nth-child(12) {
-    font-size: 31px;
+.word:nth-child(13) {
+    font-size: 140px;
     font-weight: 525;
     color: #FF6347;
 }
 
 
-.word:nth-child(13) {
-    font-size: 29px;
+.word:nth-child(14) {
+    font-size: 150px;
     font-weight: 500;
     color: black;
 }
 
-.word:nth-child(14) {
-    font-size: 25px;
+.word:nth-child(15) {
+    font-size: 160px;
     font-weight: 475;
     color: #32CD32;
 }
 
-.word:nth-child(15) {
-    font-size: 23px;
+.word:nth-child(16) {
+    font-size: 170px;
     font-weight: 450;
     color: #4169E1;
 }
 
-.word:nth-child(16) {
-    font-size: 21px;
+.word:nth-child(17) {
+    font-size: 180px;
     font-weight: 425;
     color: #9370DB;
 }
 
-.word:nth-child(17) {
-    font-size: 20px;
+.word:nth-child(18) {
+    font-size: 190px;
     font-weight: 400;
     color: #FF1493;
 }
 
-.word:nth-child(18) {
-    font-size: 19px;
+.word:nth-child(19) {
+    font-size: 200px;
     font-weight: 375;
     color: #20B2AA;
 }
 
-.word:nth-child(19) {
-    font-size: 18px;
+.word:nth-child(20) {
+    font-size: 210px;
     font-weight: 350;
     color: #BDB76B;
 }
 
-.word:nth-child(20) {
-    font-size: 16px;
-    font-weight: 300;
-    color: red;
-}
+
 .word:nth-child(2),
 .word:nth-child(6),
 .word:nth-child(8),
