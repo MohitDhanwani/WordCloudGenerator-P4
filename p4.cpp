@@ -298,7 +298,7 @@ int main()
         char outputFilename[50];
         sprintf(outputFilename, "output_%d.txt", i); 
 
-        FILE *outFile = fopen("output.txt", "w");
+        FILE *outFile = fopen(outputFilename, "w");
 
         printKMostFreq(fp, k, outFile);
         fclose(fp);
